@@ -113,6 +113,11 @@ jobs:
               @Override protected void onDestroy() { web.destroy(); super.onDestroy(); }
           }
           EOF
+          if [ -f ../icon.png ]; then
+            mkdir -p app/src/main/res/mipmap-xxxhdpi
+            cp ../icon.png app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+            sed -i 's|<application |<application android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" |' app/src/main/AndroidManifest.xml
+          fi
       - name: Compilar
         working-directory: proj
         run: gradle assembleDebug --no-daemon
